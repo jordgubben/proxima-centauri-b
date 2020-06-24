@@ -15,6 +15,7 @@ int main(int argc, char** argv) {
 	
 	// Ah-Gogogoggogogogo!
 	while(!WindowShouldClose()) {
+		process_input(menu);
 		present_menu(menu);
 	}
 

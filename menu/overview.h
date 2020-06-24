@@ -4,6 +4,8 @@
 #warning "Header file included more than once."
 #endif
 
+#include <stdbool.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -12,7 +14,8 @@ extern "C" {
 typedef struct menu_ menu_t;
 #ifdef IN_MENU_S
 typedef struct menu_ {
-
+	int current_index;
+	bool current_selected;
 } menu_t;
 #endif
 
