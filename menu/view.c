@@ -12,7 +12,9 @@ typedef struct {
 
 bool present_item(menu_t*, item_placement_t*, const char*);
 
-void  present_menu(menu_t* menu) {
+menu_wants_t present_menu(menu_t* menu) {
+	menu_wants_t want = menu_wants_to_keep_going;
+
 	BeginDrawing();
 	ClearBackground(BLACK);
 
@@ -30,6 +32,7 @@ void  present_menu(menu_t* menu) {
 
 	if(present_item(menu, &placement, "Quit")) {
 		printf("Selected: 'Quit'\n");
+		want = menu_wants_to_quit;
 	}
 
 	// Return to the top when reaching the bottom
@@ -37,6 +40,8 @@ void  present_menu(menu_t* menu) {
 
 	DrawFPS(0,0);
 	EndDrawing();
+
+	return want;
 }
 
 bool present_item(menu_t* menu, item_placement_t* placement, const char* label) {

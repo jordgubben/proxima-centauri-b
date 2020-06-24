@@ -19,12 +19,18 @@ typedef struct menu_ {
 } menu_t;
 #endif
 
+typedef enum menu_wants_t {
+	menu_wants_to_keep_going,
+	menu_wants_to_play,
+	menu_wants_to_quit,
+} menu_wants_t;
+
 // Model //
 menu_t* init_menu();
 void free_menu(menu_t*);
 
 // View //
-void present_menu(menu_t*);
+menu_wants_t present_menu(menu_t*);
 
 // Controller //
 void process_input(menu_t*);

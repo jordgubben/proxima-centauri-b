@@ -14,9 +14,10 @@ int main(int argc, char** argv) {
 	menu_t* menu = init_menu();
 	
 	// Ah-Gogogoggogogogo!
-	while(!WindowShouldClose()) {
+	menu_wants_t what_menu_wants = menu_wants_to_keep_going;
+	while(!WindowShouldClose() && what_menu_wants != menu_wants_to_quit) {
 		process_input(menu);
-		present_menu(menu);
+		what_menu_wants = present_menu(menu);
 	}
 
 	// Nap time
