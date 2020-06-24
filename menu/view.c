@@ -40,6 +40,7 @@ menu_wants_t present_main_menu(menu_t* menu) {
 
 	if(present_item(menu, &placement, "Start game")) {
 		printf("Selected: 'Start game'\n");
+		want = menu_wants_to_play;
 	}
 
 	if(present_item(menu, &placement, "Credits")) {

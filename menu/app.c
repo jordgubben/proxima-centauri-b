@@ -18,6 +18,11 @@ int main(int argc, char** argv) {
 	while(!WindowShouldClose() && what_menu_wants != menu_wants_to_quit) {
 		process_input(menu);
 		what_menu_wants = present_menu(menu);
+
+		if(what_menu_wants == menu_wants_to_play) {
+			printf("User requested to play the game, but that's not an option (yet).\n");
+			what_menu_wants = menu_wants_to_keep_going;
+		}
 	}
 
 	// Nap time
