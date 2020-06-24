@@ -17,7 +17,13 @@ int main(int argc, char** argv) {
 	menu_wants_t what_menu_wants = menu_wants_to_keep_going;
 	while(!WindowShouldClose() && what_menu_wants != menu_wants_to_quit) {
 		process_input(menu);
+
+		// Render menu
+		BeginDrawing();
+		ClearBackground(BLACK);
 		what_menu_wants = present_menu(menu);
+		DrawFPS(0,0);
+		EndDrawing();
 
 		if(what_menu_wants == menu_wants_to_play) {
 			printf("User requested to play the game, but that's not an option (yet).\n");

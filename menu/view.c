@@ -17,16 +17,10 @@ bool present_item(menu_t*, item_placement_t*, const char*);
 menu_wants_t present_menu(menu_t* menu) {
 	menu_wants_t want = menu_wants_to_keep_going;
 
-	BeginDrawing();
-	ClearBackground(BLACK);
-
 	switch(menu->state) {
 	case main_menu_state: want = present_main_menu(menu); break;
 	case credits_menu_state: present_credits(menu); break;
 	}
-
-	DrawFPS(0,0);
-	EndDrawing();
 
 	return want;
 }
