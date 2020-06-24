@@ -14,8 +14,12 @@ extern "C" {
 typedef struct menu_ menu_t;
 #ifdef IN_MENU_S
 typedef struct menu_ {
-	int current_index;
-	bool current_selected;
+	enum {
+		main_menu_state,
+		credits_menu_state,
+	} state;
+	int current_item_index;
+	bool current_item_selected;
 } menu_t;
 #endif
 

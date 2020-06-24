@@ -6,7 +6,9 @@
 
 menu_t* init_menu() {
 	menu_t* menu =  malloc(sizeof(menu_t));
-	menu->current_index = 0;
+	menu->state = main_menu_state;
+	menu->current_item_index = 0;
+	menu->current_item_selected = false;
 	return menu;
 }
 
