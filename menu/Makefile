@@ -1,9 +1,9 @@
 CFLAGS=-std=c11
 CXXFLAGS=-std=c++17
-OBJS= _model.o \
-	_view.o \
-	_controller.o \
 
+# Object files for the corresponding C source files
+# (excuding app.c since it's not linked to the test runner)
+OBJS= $(patsubst %.c,_%.o,$(subst app.c,,$(wildcard *.c)))
 
 .PHONY: clean run check all
 
