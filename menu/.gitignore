@@ -1,0 +1,4 @@
+# Build artifacts
+run-*
+_*.o
+lib*.a
