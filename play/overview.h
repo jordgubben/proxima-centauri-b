@@ -11,8 +11,9 @@ extern "C" {
 // Types //
 typedef struct play_ play_t;
 #ifdef IN_PLAY_S
+#include <raylib.h>
 typedef struct play_ {
-
+	Camera3D main_camera;
 } play_t;
 #endif
 
