@@ -10,9 +10,9 @@ typedef struct {
 	int item_index;
 } item_placement_t;
 
-menu_wants_t present_main_menu(menu_t*);
-void present_credits(menu_t*);
-bool present_item(menu_t*, item_placement_t*, const char*);
+static menu_wants_t present_main_menu(menu_t*);
+static void present_credits(menu_t*);
+static bool present_item(menu_t*, item_placement_t*, const char*);
 
 menu_wants_t present_menu(menu_t* menu) {
 	menu_wants_t want = menu_wants_to_keep_going;
@@ -25,7 +25,7 @@ menu_wants_t present_menu(menu_t* menu) {
 	return want;
 }
 
-menu_wants_t present_main_menu(menu_t* menu) {
+static menu_wants_t present_main_menu(menu_t* menu) {
 	menu_wants_t want = menu_wants_to_keep_going;
 
 	item_placement_t placement = {100.f, 300.f, 0};
@@ -53,7 +53,7 @@ menu_wants_t present_main_menu(menu_t* menu) {
 	return want;
 }
 
-void present_credits(menu_t* menu) {
+static void present_credits(menu_t* menu) {
 	DrawText("Programming", 50, 50, 20, LIGHTGRAY);
 	DrawText("Jakob \"Jordgubben\" Eklund", 50, 100, 35, LIGHTGRAY);
 
@@ -68,7 +68,7 @@ void present_credits(menu_t* menu) {
 	}
 }
 
-bool present_item(menu_t* menu, item_placement_t* placement, const char* label) {
+static bool present_item(menu_t* menu, item_placement_t* placement, const char* label) {
 	const float font_size = 20;
 	const float margin_y = 10;
 
