@@ -14,6 +14,8 @@ typedef struct play_ play_t;
 #include <raylib.h>
 typedef struct play_ {
 	Camera3D main_camera;
+	Vector3 player_position;
+	Model player_model;
 } play_t;
 #endif
 
