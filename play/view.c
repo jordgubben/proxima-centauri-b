@@ -25,8 +25,11 @@ void  render_play(play_t* play) {
 		play->main_camera.target.x, play->main_camera.target.y, play->main_camera.target.z
 		);
 	DrawText(str, 50, 350, 15, DARKGREEN);
-	snprintf(str, 1024, "Player\n\tposition: [%1.2f,%1.2f,%1.2f]",
-		play->player_position.x, play->player_position.y, play->player_position.z
+	snprintf(str, 1024, "Player"
+				"\n\tposition: [%1.2f,%1.2f,%1.2f]"
+				"\n\trotation: [%1.2f] rad",
+		play->player_position.x, play->player_position.y, play->player_position.z,
+		play->player_rotation
 		);
 	DrawText(str, 250, 350, 15, GOLD);
 }
