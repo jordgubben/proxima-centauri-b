@@ -25,7 +25,7 @@ typedef struct play_ play_t;
 typedef struct play_ {
 	Camera3D main_camera;
 	vec3_t player_position;
-	float player_rotation;
+	float player_rotation, player_rotation_dir;
 	Model player_model;
 } play_t;
 #endif
