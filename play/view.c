@@ -11,7 +11,7 @@ void  render_play(play_t* play) {
 	BeginMode3D(play->main_camera);
 	{
 		// Player
-		DrawModel(play->player_model, play->player_position, 1, GOLD);
+		DrawModel(play->player_model, vec3_to_rl(play->player_position), 1, GOLD);
 
 		DrawGrid(10, 1.f);
 		DrawGizmo(origo);

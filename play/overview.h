@@ -4,17 +4,27 @@
 #warning "Header file included more than once."
 #endif
 
+// Includes //
+#ifdef IN_PLAY_S
+#include <raylib.h>
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 // Types //
+typedef union vec3_t {
+	struct { float x, y, z; };
+	struct { float r, g, b; };
+	float arr[3];
+} vec3_t;
+
 typedef struct play_ play_t;
 #ifdef IN_PLAY_S
-#include <raylib.h>
 typedef struct play_ {
 	Camera3D main_camera;
-	Vector3 player_position;
+	vec3_t player_position;
 	float player_rotation;
 	Model player_model;
 } play_t;
@@ -31,6 +41,10 @@ void render_play(play_t*);
 void process_play_input(play_t*);
 void update_play(float, play_t*);
 
+// Linalg //
+#ifdef IN_PLAY_S
+static inline Vector3 vec3_to_rl(vec3_t v) { return (Vector3) { v.x, v.y, v.z};}
+#endif
 
 #ifdef __cplusplus
 } // extern "C"

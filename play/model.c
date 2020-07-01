@@ -14,7 +14,7 @@ play_t* init_play() {
 	play->main_camera.fovy = 45.f;
 
 	// Init player model
-	play->player_position = (Vector3) {0, 0.5f, 0};
+	play->player_position = (vec3_t) {0, 0.5f, 0};
 	play->player_model =  LoadModelFromMesh(GenMeshCube(2,1,2));
 
 	return play;
