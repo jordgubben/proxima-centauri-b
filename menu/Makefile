@@ -1,5 +1,5 @@
-CFLAGS=-std=c11
-CXXFLAGS=-std=c++17
+CFLAGS=-std=c11 -g
+CXXFLAGS=-std=c++17 -g
 
 # Object files for the corresponding C source files
 # (excuding app.c since it's not linked to the test runner)
@@ -31,6 +31,6 @@ libcatch2.a: catch2_lib.cpp
 	$(CXX) -c $(CXXFLAGS) $< -o $@
 
 clean:
-	rm -vf run-*
+	rm -rvf run-*
 	rm -vf *.o
 	rm -vf *.a
