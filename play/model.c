@@ -13,14 +13,14 @@ play_t* init_play() {
 	play->main_camera.up = (Vector3) {0,1,0};
 	play->main_camera.fovy = 45.f;
 
-	// Init player model
-	play->player_position = (vec3_t) {0, 0.5f, 0};
-	play->player_model =  LoadModelFromMesh(GenMeshCube(2,1,2));
+	// Init player
+	play->player.position = (vec3_t) {0, 0.5f, 0};
+	play->player.model =  LoadModelFromMesh(GenMeshCube(2,1,2));
 
 	return play;
 }
 
 void free_play(play_t* play) {
-	UnloadModel(play->player_model);
+	UnloadModel(play->player.model);
 	free(play);
 }

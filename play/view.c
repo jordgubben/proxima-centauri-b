@@ -5,13 +5,15 @@
 #define IN_PLAY_S
 #include "overview.h"
 
+void render_player(const player_t*);
+
 void  render_play(play_t* play) {
 	// Render world
 	Vector3 origo = {0,0,0};
 	BeginMode3D(play->main_camera);
 	{
 		// Player
-		DrawModel(play->player_model, vec3_to_rl(play->player_position), 1, GOLD);
+		render_player(&play->player);
 
 		DrawGrid(10, 1.f);
 		DrawGizmo(origo);
@@ -28,9 +30,13 @@ void  render_play(play_t* play) {
 	snprintf(str, 1024, "Player"
 				"\n\tposition: [%1.2f,%1.2f,%1.2f]"
 				"\n\trotation: [%1.2f] rad",
-		play->player_position.x, play->player_position.y, play->player_position.z,
-		play->player_rotation
+		play->player.position.x, play->player.position.y, play->player.position.z,
+		play->player.rotation
 		);
 	DrawText(str, 250, 350, 15, GOLD);
+}
+
+void render_player(const player_t* player) {
+	DrawModel(player->model, vec3_to_rl(player->position), 1, GOLD);
 }
 

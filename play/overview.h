@@ -20,13 +20,20 @@ typedef union vec3_t {
 	float arr[3];
 } vec3_t;
 
+typedef struct player_ player_t;
+#ifdef IN_PLAY_S
+typedef struct player_ {
+	vec3_t position;
+	float rotation, rotation_dir;
+	Model model;
+} player_t;
+#endif
+
 typedef struct play_ play_t;
 #ifdef IN_PLAY_S
 typedef struct play_ {
 	Camera3D main_camera;
-	vec3_t player_position;
-	float player_rotation, player_rotation_dir;
-	Model player_model;
+	player_t player;
 } play_t;
 #endif
 
