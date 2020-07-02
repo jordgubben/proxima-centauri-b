@@ -20,12 +20,14 @@ inline bool operator==(const vec3_t& lhs, const vec3_t& rhs) {
 
 inline bool operator!=(const vec3_t& lhs, const vec3_t& rhs) { return !(lhs == rhs); }
 
-SCENARIO("Proxima Centauri b - 'Play' subsystem", "[.][integration]"){
+SCENARIO("Proxima Centauri b - 'Play' subsystem", "[.][windowed]"){
+	InitWindow(200, 100, "Play subsystem windowed test");
 	play_t* play = init_play();
 
-	// TODO: Preform integration tests
+	// TODO: Preform windowed tests
 
 	free_play(play);
+	CloseWindow();
 }
 
 SCENARIO("Player orientation") {

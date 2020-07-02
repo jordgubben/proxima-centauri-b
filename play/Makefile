@@ -15,6 +15,9 @@ run: run-play
 check: run-tests
 	./run-tests
 
+check-windowed: run-tests
+	./run-tests "[windowed]"
+
 run-play: app.c overview.h $(OBJS)
 	$(CC) $(CFLAGS) $< $(OBJS) -lraylib -o $@
 
