@@ -20,10 +20,10 @@ inline bool operator==(const vec3_t& lhs, const vec3_t& rhs) {
 
 inline bool operator!=(const vec3_t& lhs, const vec3_t& rhs) { return !(lhs == rhs); }
 
-SCENARIO("Proxima Centauri b - 'Play' subsystem"){
+SCENARIO("Proxima Centauri b - 'Play' subsystem", "[.][integration]"){
 	play_t* play = init_play();
 
-       // TODO: Test adding things (and verify partitioning)
+	// TODO: Preform integration tests
 
 	free_play(play);
 }
