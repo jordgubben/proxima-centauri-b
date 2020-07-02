@@ -47,6 +47,7 @@ void render_play(play_t*);
 // Controller //
 void process_play_input(play_t*);
 void update_play(float, play_t*);
+vec3_t forward_from_y_rot(float);
 
 // Linalg //
 #ifdef IN_PLAY_S
