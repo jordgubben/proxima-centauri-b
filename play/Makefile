@@ -1,9 +1,9 @@
 CFLAGS=-std=c11 -g
 CXXFLAGS=-std=c++17 -g
 
-# Object files for the corresponding C source files
-# (excuding app.c since it's not linked to the test runner)
-OBJS= $(patsubst %.c,_%.o,$(subst app.c,,$(wildcard *.c)))
+# Define subsystem core
+CORE_SOURCES= $(subst app.c,,$(wildcard *.c))
+CORE_OBJECTS= $(patsubst %.c,_%.o, $(CORE_SOURCES))
 
 .PHONY: clean run check all
 
@@ -18,11 +18,15 @@ check: run-tests
 check-windowed: run-tests
 	./run-tests "[windowed]"
 
-run-play: app.c overview.h $(OBJS)
-	$(CC) $(CFLAGS) $< $(OBJS) -lraylib -o $@
+run-play: app.c overview.h libplay.a
+	$(CC) $(CFLAGS) $< libplay.a  -lraylib -o $@
 
-run-tests: tests.cpp overview.h $(OBJS) libcatch2.a
-	$(CXX) $(CXXFLAGS) $< $(OBJS) libcatch2.a -lraylib -o $@
+run-tests: tests.cpp overview.h libplay.a libcatch2.a
+	$(CXX) $(CXXFLAGS) $< libplay.a libcatch2.a -lraylib -o $@
+
+# Bundle core object files
+libplay.a: $(CORE_OBJECTS) overview.h
+	$(AR) rcs $@ $(CORE_OBJECTS)
 
 # Build all object files
 _%.o: %.c overview.h
