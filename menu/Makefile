@@ -2,8 +2,8 @@ CFLAGS=-std=c11 -g
 CXXFLAGS=-std=c++17 -g
 
 # Object files for the corresponding C source files
-# (excuding app.c since it's not linked to the test runner)
-OBJS= $(patsubst %.c,_%.o,$(subst app.c,,$(wildcard *.c)))
+# (excuding app_root.c since it's not linked to the test runner)
+OBJS= $(patsubst %.c,_%.o,$(subst app_root.c,,$(wildcard *.c)))
 
 .PHONY: clean run check all
 
@@ -15,7 +15,7 @@ run: run-menu
 check: run-tests
 	./run-tests
 
-run-menu: app.c overview.h $(OBJS)
+run-menu: app_root.c overview.h $(OBJS)
 	$(CC) $(CFLAGS) $< $(OBJS) -lraylib -o $@
 
 run-tests: tests.cpp overview.h $(OBJS) libcatch2.a
