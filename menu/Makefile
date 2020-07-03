@@ -5,6 +5,9 @@ CXXFLAGS=-std=c++17 -g
 # (excuding app_root.c since it's not linked to the test runner)
 OBJS= $(patsubst %.c,_%.o,$(subst app_root.c,,$(wildcard *.c)))
 
+# Link time dependencies
+DEPS= ../play/libplay.a
+
 .PHONY: clean run check all
 
 all: run-menu run-tests
@@ -16,7 +19,7 @@ check: run-tests
 	./run-tests
 
 run-menu: app_root.c overview.h $(OBJS)
-	$(CC) $(CFLAGS) $< $(OBJS) -lraylib -o $@
+	$(CC) $(CFLAGS) $< $(OBJS) $(DEPS) -lraylib -o $@
 
 run-tests: tests.cpp overview.h $(OBJS) libcatch2.a
 	$(CXX) $(CXXFLAGS) $< $(OBJS) libcatch2.a -lraylib -o $@

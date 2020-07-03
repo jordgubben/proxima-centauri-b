@@ -5,6 +5,14 @@
 #define IN_MENU_S
 #include "overview.h"
 
+// Expectations //
+typedef struct play_ play_t;
+play_t* init_play();
+void free_play(play_t*);
+void process_play_input(play_t*);
+void update_play(float, play_t*);
+void render_play(play_t*);
+
 int main(int argc, char** argv) {
 	printf("Hello, Proxima menu!\n");
 
@@ -12,26 +20,39 @@ int main(int argc, char** argv) {
 	InitWindow(640, 480, "Hello, Raylib!");
 	SetTargetFPS(60);
 	menu_t* menu = init_menu();
+
+	// Alternate states
+	play_t* play;
 	
 	// Ah-Gogogoggogogogo!
 	menu_wants_t what_menu_wants = menu_wants_to_keep_going;
 	while(!WindowShouldClose() && what_menu_wants != menu_wants_to_quit) {
-		process_input(menu);
+		// Update
+		if(play) {
+			process_play_input(play);
+			update_play(GetFrameTime(), play);
+		} else {
+			process_input(menu);
+		}
 
-		// Render menu
+		// Render
 		BeginDrawing();
 		ClearBackground(BLACK);
-		what_menu_wants = present_menu(menu);
+		if (play) {
+			render_play(play);
+		} else {
+			what_menu_wants = present_menu(menu);
+		}
 		DrawFPS(0,0);
 		EndDrawing();
 
-		if(what_menu_wants == menu_wants_to_play) {
-			printf("User requested to play the game, but that's not an option (yet).\n");
-			what_menu_wants = menu_wants_to_keep_going;
+		if(what_menu_wants == menu_wants_to_play && !play) {
+			play = init_play();
 		}
 	}
 
 	// Nap time
+	free_play(play);
 	free_menu(menu);
 	CloseWindow();
 	return 0;

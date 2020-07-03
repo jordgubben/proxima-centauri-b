@@ -21,6 +21,7 @@ play_t* init_play() {
 }
 
 void free_play(play_t* play) {
+	if(!play) { return; }
 	UnloadModel(play->player.model);
 	free(play);
 }
