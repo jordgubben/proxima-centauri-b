@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <raylib.h>
+#include <math.h>
 
 #define IN_PLAY_S
 #include "overview.h"
@@ -37,6 +38,17 @@ void  render_play(play_t* play) {
 }
 
 void render_player(const player_t* player) {
-	DrawModel(player->model, vec3_to_rl(player->position), 1, GOLD);
+	// Update model transform
+	// (Note: Matrix is transposed because OpenGL is column major)
+	const float r = player->rotation;
+	Model model = player->model;
+	model.transform =
+		(Matrix)
+		{ cosf(r), 0,sinf(-r), 0
+		,       0, 1,       0, 0
+		,sinf(+r), 0, cosf(r), 0
+		,       0, 0,       0, 1
+		};
+	DrawModel(model, vec3_to_rl(player->position), 1, GOLD);
 }
 

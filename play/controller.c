@@ -28,17 +28,6 @@ void update_player_physics(float dt, player_t* player) {
 	// Rotate player
 	player->rotation += player->rotation_dir * dt * tau;
 	player->rotation -= floorf(player->rotation/tau) * tau;
-
-	// Update model transform
-	// (Note: Matrix is transposed because OpenGL is column major)
-	const float r = player->rotation;
-	player->model.transform =
-		(Matrix)
-		{ cosf(r), 0,sinf(-r), 0
-		,       0, 1,       0, 0
-		,sinf(+r), 0, cosf(r), 0
-		,       0, 0,       0, 1
-		};
 }
 
 vec3_t forward_from_y_rot(float y_rad) {
