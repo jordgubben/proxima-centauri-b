@@ -46,8 +46,8 @@ SCENARIO("Player orientation") {
 	GIVEN("A player that is rotated 90 degrees") {
 		player.rotation = 0.25 * tau;
 
-		THEN("Forward is in along the +x axis") {
-			vec3_t expected = {+1,0,0};
+		THEN("Forward is in along the -x axis") {
+			vec3_t expected = {-1,0,0};
 			vec3_t actual = vec3_round(forward_from_y_rot(player.rotation));
 			CHECK( actual == expected);
 		}
@@ -66,8 +66,8 @@ SCENARIO("Player orientation") {
 	GIVEN("A player that is rotated 270 degrees") {
 		player.rotation = 0.75 * tau;
 
-		THEN("Forward is in along the -x axis") {
-			vec3_t expected = {-1,0,0};
+		THEN("Forward is in along the +x axis") {
+			vec3_t expected = {+1,0,0};
 			vec3_t actual = vec3_round(forward_from_y_rot(player.rotation));
 			CHECK( actual == expected);
 		}

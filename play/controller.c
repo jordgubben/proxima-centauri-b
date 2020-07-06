@@ -31,5 +31,5 @@ void update_player_physics(float dt, player_t* player) {
 }
 
 vec3_t forward_from_y_rot(float y_rad) {
-	return (vec3_t) {sinf(y_rad), 0, cosf(y_rad)};
+	return (vec3_t) {-sinf(y_rad), 0, cosf(y_rad)};
 }
