@@ -30,13 +30,16 @@ void  render_play(play_t* play) {
 	DrawText(str, 50, 350, 15, DARKGREEN);
 
 	const vec3_t p = play->player.position;
+	const vec3_t v = play->player.velocity;
 	const vec3_t f = forward_from_y_rot(play->player.rotation);
 	const float r = play->player.rotation;
 	snprintf(str, 1024, "Player"
 				"\n\tposition: [%1.2f,%1.2f,%1.2f]"
+				"\n\tvelocity: [%1.2f,%1.2f,%1.2f]"
 				"\n\tforward: [%1.2f,%1.2f,%1.2f]"
 				"\n\trotation: [%1.2f] rad",
 		p.x, p.y, p.z,
+		v.x, v.y, v.z,
 		f.x, f.y, f.z,
 		r
 		);

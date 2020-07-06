@@ -16,6 +16,8 @@ void process_play_input(play_t* play) {
 	} else {
 		play->player.rotation_dir = 0;
 	}
+
+	play->player.go_forward = IsKeyDown(KEY_UP);
 }
 
 void update_player_physics(float, player_t*);
@@ -24,10 +26,34 @@ void update_play(float dt, play_t* play) {
 	update_player_physics(dt, &play->player);
 }
 
+
+vec3_t vec3_add(vec3_t, vec3_t);
+vec3_t vec3_scaled_by(float, vec3_t);
+
 void update_player_physics(float dt, player_t* player) {
+	// Accelerate player
+	vec3_t acceleration = {0};
+	if (player->go_forward) {
+		vec3_t forward = forward_from_y_rot(player->rotation);
+		acceleration = vec3_scaled_by(10, forward);
+	}
+	const linear_friction = 2;
+	acceleration = vec3_add(acceleration, vec3_scaled_by(-linear_friction, player->velocity));
+	player->position = vec3_add(player->position, vec3_scaled_by(dt, player->velocity));
+	player->position = vec3_add(player->position, vec3_scaled_by(dt*dt/2.f, acceleration));
+	player->velocity = vec3_add(player->velocity, vec3_scaled_by(dt, acceleration));
+
 	// Rotate player
 	player->rotation += player->rotation_dir * dt * tau;
 	player->rotation -= floorf(player->rotation/tau) * tau;
+}
+
+vec3_t vec3_add(vec3_t v1, vec3_t v2) {
+	return (vec3_t) { v1.x + v2.x, v1.y + v2.y, v1.z + v2.z };
+}
+
+vec3_t vec3_scaled_by(float s, vec3_t v) {
+	return (vec3_t) { v.x * s, v.y * s, v.z * s };
 }
 
 vec3_t forward_from_y_rot(float y_rad) {

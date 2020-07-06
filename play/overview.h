@@ -23,7 +23,8 @@ typedef union vec3_t {
 typedef struct player_ player_t;
 #ifdef IN_PLAY_S
 typedef struct player_ {
-	vec3_t position;
+	bool go_forward;
+	vec3_t position, velocity;
 	float rotation, rotation_dir;
 	Model model;
 } player_t;
