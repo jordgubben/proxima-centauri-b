@@ -6,6 +6,7 @@
 
 // Includes //
 #ifdef IN_PLAY_S
+#include <math.h>
 #include <raylib.h>
 #endif
 
@@ -53,6 +54,7 @@ vec3_t forward_from_y_rot(float);
 // Linalg //
 #ifdef IN_PLAY_S
 static inline Vector3 vec3_to_rl(vec3_t v) { return (Vector3) { v.x, v.y, v.z};}
+static inline float vec3_length(vec3_t v) { return sqrtf(v.x * v.x + v.y * v.y + v.z * v.z); }
 #endif
 
 #ifdef __cplusplus

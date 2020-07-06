@@ -30,15 +30,18 @@ void update_play(float dt, play_t* play) {
 vec3_t vec3_add(vec3_t, vec3_t);
 vec3_t vec3_scaled_by(float, vec3_t);
 
+// Maximum velocity ≈ 20 m/s
+const float forward_acceleration = 40;
+const float linear_deacceleration = 2;
+
 void update_player_physics(float dt, player_t* player) {
 	// Accelerate player
 	vec3_t acceleration = {0};
 	if (player->go_forward) {
 		vec3_t forward = forward_from_y_rot(player->rotation);
-		acceleration = vec3_scaled_by(10, forward);
+		acceleration = vec3_scaled_by(forward_acceleration, forward);
 	}
-	const linear_friction = 2;
-	acceleration = vec3_add(acceleration, vec3_scaled_by(-linear_friction, player->velocity));
+	acceleration = vec3_add(acceleration, vec3_scaled_by(-linear_deacceleration, player->velocity));
 	player->position = vec3_add(player->position, vec3_scaled_by(dt, player->velocity));
 	player->position = vec3_add(player->position, vec3_scaled_by(dt*dt/2.f, acceleration));
 	player->velocity = vec3_add(player->velocity, vec3_scaled_by(dt, acceleration));

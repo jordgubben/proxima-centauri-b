@@ -39,11 +39,11 @@ void  render_play(play_t* play) {
 	const float r = play->player.rotation;
 	snprintf(str, 1024, "Player"
 				"\n\tposition: [%1.2f,%1.2f,%1.2f]"
-				"\n\tvelocity: [%1.2f,%1.2f,%1.2f]"
+				"\n\tvelocity: [%1.2f,%1.2f,%1.2f] (%2.02f m/s | %2.02f km/h)"
 				"\n\tforward: [%1.2f,%1.2f,%1.2f]"
 				"\n\trotation: [%1.2f] rad",
 		p.x, p.y, p.z,
-		v.x, v.y, v.z,
+		v.x, v.y, v.z, vec3_length(v), 3.6f * vec3_length(v),
 		f.x, f.y, f.z,
 		r
 		);
