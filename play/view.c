@@ -11,6 +11,10 @@ void render_player(const player_t*);
 void  render_play(play_t* play) {
 	// Render world
 	Vector3 origo = {0,0,0};
+
+	// Point camera directly at player
+	play->main_camera.target = vec3_to_rl(play->player.position);
+
 	BeginMode3D(play->main_camera);
 	{
 		// Player
