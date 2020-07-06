@@ -28,11 +28,17 @@ void  render_play(play_t* play) {
 		play->main_camera.target.x, play->main_camera.target.y, play->main_camera.target.z
 		);
 	DrawText(str, 50, 350, 15, DARKGREEN);
+
+	const vec3_t p = play->player.position;
+	const vec3_t f = forward_from_y_rot(play->player.rotation);
+	const float r = play->player.rotation;
 	snprintf(str, 1024, "Player"
 				"\n\tposition: [%1.2f,%1.2f,%1.2f]"
+				"\n\tforward: [%1.2f,%1.2f,%1.2f]"
 				"\n\trotation: [%1.2f] rad",
-		play->player.position.x, play->player.position.y, play->player.position.z,
-		play->player.rotation
+		p.x, p.y, p.z,
+		f.x, f.y, f.z,
+		r
 		);
 	DrawText(str, 250, 350, 15, GOLD);
 }
@@ -50,5 +56,11 @@ void render_player(const player_t* player) {
 		,       0, 0,       0, 1
 		};
 	DrawModel(model, vec3_to_rl(player->position), 1, GOLD);
+
+	// Debug
+	const vec3_t p1 = player->position;
+	const vec3_t f = forward_from_y_rot(player->rotation);
+	vec3_t p2 = {p1.x + f.x * 2, p1.y + f.y * 2, p1.z + f.z * 2};
+	DrawLine3D(vec3_to_rl(p1), vec3_to_rl(p2), MAROON);
 }
 
