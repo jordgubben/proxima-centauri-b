@@ -34,6 +34,7 @@ typedef struct player_ {
 typedef enum camera_mode_t {
 	cm_static_fixed,
 	cm_static_follow,
+	cm_on_the_nose,
 	num_camera_modes, // Not a mode :P
 } camera_mode_t;
 

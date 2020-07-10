@@ -60,14 +60,28 @@ void update_player_physics(float dt, player_t* player) {
 }
 
 void update_camera(play_t* play) {
+	const vec3_t up = {0,1,0};
+	const vec3_t above_player = vec3_add(play->player.position, up);
 	switch(play->camera_mode) {
 		case cm_static_fixed:
+			play->main_camera.position = (Vector3) {0,5,10};
 			play->main_camera.target = (Vector3) { 0, 1, 0};
 			break;
 
 		case cm_static_follow:
+			play->main_camera.position = (Vector3) {0,5,0};
 			play->main_camera.target = vec3_to_rl(play->player.position);
 			break;
+
+		case cm_on_the_nose:
+			play->main_camera.position =
+				vec3_to_rl(above_player);
+			play->main_camera.target =
+				vec3_to_rl(vec3_add(above_player, forward_from_y_rot(play->player.rotation)));
+			break;
+
+		// Not a mode - Silence compilation warning
+		case  num_camera_modes:  break;
 	}
 }
 
