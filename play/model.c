@@ -8,6 +8,7 @@ play_t* init_play() {
 	play_t* play =  calloc(1, sizeof(play_t));
 
 	// Init camera
+	play->camera_mode = cm_static_fixed;
 	play->main_camera.position = (Vector3) {1,5,10};
 	play->main_camera.target = (Vector3) {0, 0, 0};
 	play->main_camera.up = (Vector3) {0,1,0};

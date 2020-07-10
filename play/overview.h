@@ -31,10 +31,17 @@ typedef struct player_ {
 } player_t;
 #endif
 
+typedef enum camera_mode_t {
+	cm_static_fixed,
+	cm_static_follow,
+	num_camera_modes, // Not a mode :P
+} camera_mode_t;
+
 typedef struct play_ play_t;
 #ifdef IN_PLAY_S
 typedef struct play_ {
 	Camera3D main_camera;
+	camera_mode_t camera_mode;
 	player_t player;
 } play_t;
 #endif

@@ -18,12 +18,20 @@ void process_play_input(play_t* play) {
 	}
 
 	play->player.go_forward = IsKeyDown(KEY_UP);
+
+	if (IsKeyPressed(KEY_C)) {
+		play->camera_mode += 1;
+		play->camera_mode %= num_camera_modes;
+		printf("Camera mode changed to [%u]\n", play->camera_mode);
+	}
 }
 
 void update_player_physics(float, player_t*);
+void update_camera(play_t*);
 
 void update_play(float dt, play_t* play) {
 	update_player_physics(dt, &play->player);
+	update_camera(play);
 }
 
 
@@ -49,6 +57,18 @@ void update_player_physics(float dt, player_t* player) {
 	// Rotate player
 	player->rotation += player->rotation_dir * dt * tau;
 	player->rotation -= floorf(player->rotation/tau) * tau;
+}
+
+void update_camera(play_t* play) {
+	switch(play->camera_mode) {
+		case cm_static_fixed:
+			play->main_camera.target = (Vector3) { 0, 1, 0};
+			break;
+
+		case cm_static_follow:
+			play->main_camera.target = vec3_to_rl(play->player.position);
+			break;
+	}
 }
 
 vec3_t vec3_add(vec3_t v1, vec3_t v2) {
