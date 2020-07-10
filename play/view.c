@@ -6,6 +6,7 @@
 #define IN_PLAY_S
 #include "overview.h"
 
+Camera3D get_main_camera(camera_mode_t, const player_t*);
 void render_player(const player_t*);
 void draw_rl_matrix_as_text(const char* title, Matrix m, float x, float y, float s, Color c);
 
@@ -13,7 +14,8 @@ void  render_play(play_t* play) {
 	// Render world
 	Vector3 origo = {0,0,0};
 
-	BeginMode3D(play->main_camera);
+	Camera3D main_camera = get_main_camera(play->camera_mode, &play->player);
+	BeginMode3D(main_camera);
 	{
 		// Player
 		render_player(&play->player);
@@ -22,12 +24,13 @@ void  render_play(play_t* play) {
 		DrawGizmo(origo);
 	}
 	EndMode3D();
+	draw_rl_matrix_as_text("Camera matrix", GetCameraMatrix(main_camera), 450, 25, 10, RED);
 
 	// Render debug
 	char str[1024];
 	snprintf(str, 1024, "Camera\n\tposition: [%1.2f,%1.2f,%1.2f]\n\ttarget: [%1.2f,%1.2f,%1.2f]",
-		play->main_camera.position.x, play->main_camera.position.y, play->main_camera.position.z,
-		play->main_camera.target.x, play->main_camera.target.y, play->main_camera.target.z
+		main_camera.position.x, main_camera.position.y, main_camera.position.z,
+		main_camera.target.x, main_camera.target.y, main_camera.target.z
 		);
 	DrawText(str, 50, 350, 15, DARKGREEN);
 
@@ -46,9 +49,42 @@ void  render_play(play_t* play) {
 		r
 		);
 	DrawText(str, 250, 350, 15, GOLD);
+}
 
-	// Model matrix
-	draw_rl_matrix_as_text("Camera matrix", GetCameraMatrix(play->main_camera), 450, 25, 10, RED);
+Camera3D get_main_camera(camera_mode_t camera_mode, const player_t* player) {
+	const vec3_t up = {0,1,0};
+	const vec3_t above_player = vec3_add(player->position, up);
+
+	// Setup camera defaults
+	Camera3D main_camera = {0};
+	main_camera.position = (Vector3) {0,5,0};
+	main_camera.target = (Vector3) {0, 0, 1};
+	main_camera.up = (Vector3) {0,1,0};
+	main_camera.fovy = 45.f;
+
+	switch(camera_mode) {
+		case cm_static_fixed:
+			main_camera.position = (Vector3) {0,5,10};
+			main_camera.target = (Vector3) { 0, 1, 0};
+			break;
+
+		case cm_static_follow:
+			main_camera.position = (Vector3) {0,5,0};
+			main_camera.target = vec3_to_rl(player->position);
+			break;
+
+		case cm_on_the_nose:
+			main_camera.position =
+				vec3_to_rl(above_player);
+			main_camera.target =
+				vec3_to_rl(vec3_add(above_player, forward_from_y_rot(player->rotation)));
+			break;
+
+		// Not a mode - Silence compilation warning
+		case  num_camera_modes:  break;
+	}
+
+	return main_camera;
 }
 
 void draw_rl_matrix_as_text(const char* title, Matrix m, float x, float y, float s, Color c) {
@@ -66,7 +102,6 @@ void draw_rl_matrix_as_text(const char* title, Matrix m, float x, float y, float
 		);
 	DrawText(str, x, y, s, c);
 }
-
 
 void render_player(const player_t* player) {
 	// Update model transform

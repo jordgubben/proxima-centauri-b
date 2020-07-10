@@ -41,7 +41,6 @@ typedef enum camera_mode_t {
 typedef struct play_ play_t;
 #ifdef IN_PLAY_S
 typedef struct play_ {
-	Camera3D main_camera;
 	camera_mode_t camera_mode;
 	player_t player;
 } play_t;
@@ -63,6 +62,7 @@ vec3_t forward_from_y_rot(float);
 #ifdef IN_PLAY_S
 static inline Vector3 vec3_to_rl(vec3_t v) { return (Vector3) { v.x, v.y, v.z};}
 static inline float vec3_length(vec3_t v) { return sqrtf(v.x * v.x + v.y * v.y + v.z * v.z); }
+static inline vec3_t vec3_add(vec3_t v1, vec3_t v2) { return (vec3_t) { v1.x + v2.x, v1.y + v2.y, v1.z + v2.z }; }
 #endif
 
 #ifdef __cplusplus
