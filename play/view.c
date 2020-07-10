@@ -7,7 +7,7 @@
 #include "overview.h"
 
 void render_player(const player_t*);
-void draw_matrix_as_text(const char* title, Matrix m, float x, float y, float s, Color c);
+void draw_rl_matrix_as_text(const char* title, Matrix m, float x, float y, float s, Color c);
 
 void  render_play(play_t* play) {
 	// Render world
@@ -51,10 +51,10 @@ void  render_play(play_t* play) {
 	DrawText(str, 250, 350, 15, GOLD);
 
 	// Model matrix
-	draw_matrix_as_text("Camera matrix", GetCameraMatrix(play->main_camera), 450, 25, 10, RED);
+	draw_rl_matrix_as_text("Camera matrix", GetCameraMatrix(play->main_camera), 450, 25, 10, RED);
 }
 
-void draw_matrix_as_text(const char* title, Matrix m, float x, float y, float s, Color c) {
+void draw_rl_matrix_as_text(const char* title, Matrix m, float x, float y, float s, Color c) {
 	char str[1024];
 	snprintf(str, 1024, "%s:\n"
 		"[ %1.2f, %1.2f, %1.2f, %1.2f|\n"
@@ -62,10 +62,10 @@ void draw_matrix_as_text(const char* title, Matrix m, float x, float y, float s,
 		"| %1.2f, %1.2f, %1.2f, %1.2f|\n"
 		"| %1.2f, %1.2f, %1.2f, %1.2f]",
 		title,
-		m.m0, m.m1, m.m2, m.m3,
-		m.m4, m.m5, m.m6, m.m7,
-		m.m8, m.m9, m.m10, m.m11,
-		m.m12, m.m13, m.m14, m.m15
+		m.m0, m.m4, m.m8, m.m12,
+		m.m1, m.m5, m.m9, m.m13,
+		m.m2, m.m6, m.m10, m.m14,
+		m.m3, m.m7, m.m11, m.m15
 		);
 	DrawText(str, x, y, s, c);
 }
