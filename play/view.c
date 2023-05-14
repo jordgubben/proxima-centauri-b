@@ -21,7 +21,6 @@ void  render_play(play_t* play) {
 		render_player(&play->player);
 
 		DrawGrid(10, 1.f);
-		DrawGizmo(origo);
 	}
 	EndMode3D();
 	draw_rl_matrix_as_text("Camera matrix", GetCameraMatrix(main_camera), 450, 25, 10, RED);
