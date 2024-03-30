@@ -4,14 +4,7 @@
 
 #define IN_MENU_S
 #include "menu.h"
-
-// Expectations //
-typedef struct play_ play_t;
-play_t* init_play();
-void free_play(play_t*);
-void process_play_input(play_t*);
-void update_play(float, play_t*);
-void render_play(play_t*);
+#include "play.h"
 
 int main(int argc, char** argv) {
 	printf("Hello, Proxima menu!\n");

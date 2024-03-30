@@ -4,7 +4,7 @@
 #include <math.h>
 
 #define IN_PLAY_S
-#include "overview.h"
+#include "play.h"
 
 Camera3D get_main_camera(camera_mode_t, const player_t*);
 void render_player(const player_t*);

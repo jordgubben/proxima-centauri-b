@@ -1,4 +1,4 @@
-CFLAGS=-std=c11 -g -I include/
+CFLAGS=-std=c11 -g -I include/ -I ../play/include/
 
 # Object files for the corresponding C source files
 # Excluding app_root.c and tests.c since they have main functions.
