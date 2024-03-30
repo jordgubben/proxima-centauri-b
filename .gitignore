@@ -4,8 +4,9 @@ _screenshots/
 # macOs
 .DS_Store
 
-# Vim
+# Vim (and friends)
 *.swp
+tags
 
 # Prerequisites
 *.d
