@@ -3,7 +3,7 @@
 #include <raylib.h>
 
 #define IN_MENU_S
-#include "overview.h"
+#include "menu.h"
 
 void process_input(menu_t* menu) {
 	if(IsKeyPressed(KEY_UP)) {

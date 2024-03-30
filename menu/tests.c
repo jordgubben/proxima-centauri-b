@@ -1,7 +1,7 @@
 #include <stdlib.h>
 
 #define IN_MENU_S
-#include "overview.h"
+#include "menu.h"
 
 void test_submodule() {
 	menu_t* menu = init_menu();

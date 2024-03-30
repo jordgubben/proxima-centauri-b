@@ -1,4 +1,4 @@
-CFLAGS=-std=c11 -g
+CFLAGS=-std=c11 -g -I include/
 
 # Object files for the corresponding C source files
 # Excluding app_root.c and tests.c since they have main functions.
@@ -18,15 +18,15 @@ check: run-tests
 	./run-tests
 
 # Build main executable
-run-menu: app_root.c overview.h $(OBJS)
+run-menu: app_root.c include/menu.h $(OBJS)
 	$(CC) $(CFLAGS) $< $(OBJS) $(DEPS) -lraylib -o $@
 
 # Build test executable
-run-tests: tests.c overview.h $(OBJS)
+run-tests: tests.c include/menu.h $(OBJS)
 	$(CC) $(CFLAGS) $< $(OBJS) -lraylib -o $@
 
 # Build all object files
-_%.o: %.c overview.h
+_%.o: %.c include/menu.h
 	$(CC) -c  $(CFLAGS) $< -o $@
 
 clean:
