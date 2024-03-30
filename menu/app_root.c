@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
 	menu_t* menu = init_menu();
 
 	// Alternate states
-	play_t* play;
+	play_t* play = NULL;
 	
 	// Ah-Gogogoggogogogo!
 	menu_wants_t what_menu_wants = menu_wants_to_keep_going;
