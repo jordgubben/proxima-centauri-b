@@ -1,7 +1,7 @@
 CFLAGS=-std=c11 -g -I include/
 
 # Define subsystem core
-CORE_SOURCES= $(subst app_root.c,,$(wildcard *.c))
+CORE_SOURCES=$(patsubst %.c,_%.o, $(subst test_play.c,,$(subst exec_play.c,,$(wildcard *.c))))
 CORE_OBJECTS= $(patsubst %.c,_%.o, $(CORE_SOURCES))
 
 .PHONY: clean run check all
@@ -17,10 +17,10 @@ check: run-tests
 check-windowed: run-tests
 	./run-tests "[windowed]"
 
-run-play: app_root.c include/play.h libplay.a
+run-play: exec_play.c include/play.h libplay.a
 	$(CC) $(CFLAGS) $< libplay.a -lraylib -o $@
 
-run-tests: tests.c include/play.h libplay.a
+run-tests: test_play.c include/play.h libplay.a
 	$(CC) $(CFLAGS) $< libplay.a -lraylib -o $@
 
 # Bundle core object files

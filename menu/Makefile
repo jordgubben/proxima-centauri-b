@@ -1,8 +1,8 @@
 CFLAGS=-std=c11 -g -I include/ -I ../play/include/
 
-# Object files for the corresponding C source files
-# Excluding app_root.c and tests.c since they have main functions.
-OBJS= $(patsubst %.c,_%.o,$(subst tests.c,,$(subst app_root.c,,$(wildcard *.c))))
+# Define subsystem core
+CORE_SOURCES=$(patsubst %.c,_%.o, $(subst test_menu.c,,$(subst exec_menu.c,,$(wildcard *.c))))
+CORE_OBJECTS= $(patsubst %.c,_%.o, $(CORE_SOURCES))
 
 # Link time dependencies
 DEPS= ../play/libplay.a
@@ -18,12 +18,16 @@ check: run-tests
 	./run-tests
 
 # Build main executable
-run-menu: app_root.c include/menu.h $(OBJS)
-	$(CC) $(CFLAGS) $< $(OBJS) $(DEPS) -lraylib -o $@
+run-menu: exec_menu.c include/menu.h libmenu.a
+	$(CC) $(CFLAGS) $< libmenu.a $(DEPS) -lraylib -o $@
 
 # Build test executable
-run-tests: tests.c include/menu.h $(OBJS)
-	$(CC) $(CFLAGS) $< $(OBJS) -lraylib -o $@
+run-tests: test_menu.c include/menu.h libmenu.a
+	$(CC) $(CFLAGS) $< libmenu.a -lraylib -o $@
+
+# Bundle core object files
+libmenu.a: $(CORE_OBJECTS) include/menu.h
+	$(AR) rcs $@ $(CORE_OBJECTS)
 
 # Build all object files
 _%.o: %.c include/menu.h
