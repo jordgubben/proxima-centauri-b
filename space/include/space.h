@@ -18,8 +18,7 @@ typedef struct space_ {
 } space_t;
 
 // Model //
-space_t* init_space();
-void free_space(space_t*);
+void init_space(space_t*);
 
 // View //
 void render_space(space_t const*);
