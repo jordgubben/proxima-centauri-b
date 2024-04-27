@@ -14,7 +14,7 @@ bool vec3_equals(vec3_t lhs, vec3_t rhs) {
 	return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z;
 }
 
-void test_submodule() {
+void test_play_submodule() {
 	InitWindow(200, 100, "Play subsystem windowed test");
 	play_t* play = init_play();
 

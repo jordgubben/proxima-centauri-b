@@ -3,7 +3,7 @@
 #define IN_MENU_S
 #include "menu.h"
 
-void test_submodule() {
+void test_menu_submodule() {
 	menu_t* menu = init_menu();
 
 	// TODO: Test adding things (and verify partitioning)
@@ -12,7 +12,7 @@ void test_submodule() {
 }
 
 int main(int argc, char** argv ) {
-	test_submodule();
+	test_menu_submodule();
 	return EXIT_SUCCESS;
 }
 
