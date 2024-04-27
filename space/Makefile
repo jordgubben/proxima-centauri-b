@@ -1,4 +1,5 @@
-CFLAGS=-std=c11 -g -I include/
+CFLAGS=-std=c11 -g -I include/ $(shell pkg-config --cflags raylib)
+LDFLAGS=$(shell pkg-config --libs raylib)
 
 # Define subsystem core
 CORE_SOURCES=$(patsubst %.c,_%.o, $(subst test_space.c,,$(subst exec_space.c,,$(wildcard *.c))))
@@ -15,10 +16,10 @@ check: run-tests
 	./run-tests
 
 run-space: exec_space.c include/space.h libspace.a
-	$(CC) $(CFLAGS) $< libspace.a -lraylib -o $@
+	$(CC) $(CFLAGS) $(LDFLAGS) $< libspace.a -o $@
 
 run-tests: test_space.c include/space.h libspace.a
-	$(CC) $(CFLAGS) $< libspace.a -lraylib -o $@
+	$(CC) $(CFLAGS) $(LDFLAGS) $< libspace.a -o $@
 
 # Bundle core object files
 libspace.a: $(CORE_OBJECTS) include/space.h

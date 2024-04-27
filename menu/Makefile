@@ -1,4 +1,5 @@
-CFLAGS=-std=c11 -g -I include/ -I ../play/include/
+CFLAGS=-std=c11 -g -I include/ -I ../play/include/ $(shell pkg-config --cflags raylib)
+LDFLAGS=$(shell pkg-config --libs raylib)
 
 # Define subsystem core
 CORE_SOURCES=$(patsubst %.c,_%.o, $(subst test_menu.c,,$(subst exec_menu.c,,$(wildcard *.c))))
@@ -19,11 +20,11 @@ check: run-tests
 
 # Build main executable
 run-menu: exec_menu.c include/menu.h libmenu.a
-	$(CC) $(CFLAGS) $< libmenu.a $(DEPS) -lraylib -o $@
+	$(CC) $(CFLAGS) $(LDFLAGS) $< libmenu.a $(DEPS) -o $@
 
 # Build test executable
 run-tests: test_menu.c include/menu.h libmenu.a
-	$(CC) $(CFLAGS) $< libmenu.a -lraylib -o $@
+	$(CC) $(CFLAGS) $(LDFLAGS) $< libmenu.a -o $@
 
 # Bundle core object files
 libmenu.a: $(CORE_OBJECTS) include/menu.h

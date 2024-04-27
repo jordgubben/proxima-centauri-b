@@ -1,4 +1,5 @@
-CFLAGS=-std=c11 -g -I include/
+CFLAGS=-std=c11 -g -I include/ $(shell pkg-config --cflags raylib)
+LDFLAGS=$(shell pkg-config --libs raylib)
 
 # Define subsystem core
 CORE_SOURCES=$(patsubst %.c,_%.o, $(subst test_play.c,,$(subst exec_play.c,,$(wildcard *.c))))
@@ -18,10 +19,10 @@ check-windowed: run-tests
 	./run-tests "[windowed]"
 
 run-play: exec_play.c include/play.h libplay.a
-	$(CC) $(CFLAGS) $< libplay.a -lraylib -o $@
+	$(CC) $(CFLAGS) $(LDFLAGS) $< libplay.a -o $@
 
 run-tests: test_play.c include/play.h libplay.a
-	$(CC) $(CFLAGS) $< libplay.a -lraylib -o $@
+	$(CC) $(CFLAGS) $(LDFLAGS) $< libplay.a -o $@
 
 # Bundle core object files
 libplay.a: $(CORE_OBJECTS) include/play.h
