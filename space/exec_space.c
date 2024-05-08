@@ -11,6 +11,8 @@ int main(int argc, char** argv) {
 	SetTargetFPS(60);
 	space_t space = {};
 	init_space( &space);
+	create_ship_at( 220, 240, &space);
+	create_ship_at( 420, 240, &space);
 	
 	// Ah-Gogogoggogogogo!
 	while(!WindowShouldClose()) {
