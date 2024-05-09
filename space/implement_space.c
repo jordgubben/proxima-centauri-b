@@ -2,10 +2,12 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #define IN_SPACE_S
 #include "space.h"
 
+#include "game_state_recorder.h"
 
 const float tau = 6.28;
 const float ship_acceleration = 500;
@@ -36,6 +38,7 @@ uint16_t create_ship_at( float x, float y, space_t *space) {
 
 
 ////////////////////////////////////////////////////////////////////////////////
+// Update 'space' subsystem
 
 void process_space_input(space_t* space) {
 	assert( space );
@@ -96,6 +99,7 @@ void update_space(float dt, space_t* space) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// Render 'space' subsystem
 
 void  render_space(space_t const* space) {
 
@@ -127,4 +131,5 @@ void  render_space(space_t const* space) {
 	}
 }
 
-
+#define IMPLEMENT_ME_SENPAI
+#include "game_state_recorder.h"
