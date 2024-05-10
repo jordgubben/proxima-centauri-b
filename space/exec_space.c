@@ -8,25 +8,30 @@
 #include "space.h"
 
 void show_gsr_info( gsr_vhs_t const *gsr ) {
-	// Print positions for all ships
-	const float text_size = 14;
-	const float row_h = 14;
-	float offset_x = 32, offset_y = 32;
-	for ( gsr_tick_t const *tick = &gsr->ticks[0];
-		tick < &gsr->ticks[gsr->capacity]; tick++ ) {
-		char buffer[1024];
+	const uint32_t segment_size = 48;
+	uint32_t first_tick = segment_size * ( gsr_next_tick( gsr ) / segment_size );
+	uint32_t last_tick = first_tick + segment_size;
 
+	// Print positions for all ships
+	const float text_size = 8;
+	const float row_h = 8;
+	float offset_x = 16, offset_y = 24;
+	for ( int tick_nr = first_tick; tick_nr < last_tick; tick_nr++ ) {
+		char buffer[1024];
 		char cursor = ' ';
-		if ( tick->tick_nr == gsr_last_tick( gsr )) {
-			cursor = '*';
-		} else if ( tick->tick_nr == gsr_next_tick( gsr) ) {
+		if ( tick_nr == gsr_last_tick( gsr )) {
+			cursor = '<';
+		} else if ( tick_nr == gsr_next_tick( gsr) ) {
 			cursor = '>';
 		}
-		snprintf( buffer, 1024, "%c #%u"
+		char data = gsr_has_tick( tick_nr, gsr) ? 'O' : 'X';
+		Color color = gsr_has_tick( tick_nr, gsr) ? BLACK : LIGHTGRAY;
+		snprintf( buffer, 1024, "|%c| %c #%u"
+			, data
 			, cursor
-			, tick->tick_nr
+			, tick_nr
 			);
-		DrawText( buffer, offset_x, offset_y, text_size, BLACK );
+		DrawText( buffer, offset_x, offset_y, text_size, color );
 
 		offset_y += row_h;
 	}
@@ -37,9 +42,11 @@ int main(int argc, char** argv) {
 	// Get things up and running
 	InitWindow(640, 480, "Hello, Space subsystem!");
 	SetTargetFPS(60);
+	bool paused = false;
 
 	// Initialize game state recorder
-	size_t gsr_size = gsr_requireed_size( 16 );
+	// (1024 ticks ≈ 17 seconds)
+	size_t gsr_size = gsr_requireed_size( 1024 );
 	gsr_vhs_t *gsr =
 		gsr_init( gsr_size, malloc( gsr_size ));
 
@@ -50,14 +57,25 @@ int main(int argc, char** argv) {
 	
 	// Ah-Gogogoggogogogo!
 	while(!WindowShouldClose()) {
-		gsr_record_tick( sizeof ( space_t ), &space, gsr );
-
-		// Update
 		float dt = 1.f / 60.f;
-		process_space_input(&space);
-		update_space(dt, &space);
 
-		// Render
+		// Playback controls
+		if ( IsKeyPressed( KEY_P ) ) {
+			paused = !paused;
+		}
+		bool rewinding = IsKeyDown( KEY_R );
+
+		// Update (or otherwise manipulate) game state.
+		if ( rewinding ) {
+			gsr_step_back( gsr );
+			gsr_restore_last( gsr, sizeof( space_t ), &space );
+		} else if ( !paused ) {
+			gsr_record_tick( sizeof ( space_t ), &space, gsr );
+			process_space_input(&space);
+			update_space(dt, &space);
+		}
+
+		// Render regardless of what we're doing.
 		BeginDrawing();
 		ClearBackground(RAYWHITE);
 		render_space(&space);

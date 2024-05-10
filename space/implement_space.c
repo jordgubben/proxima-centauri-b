@@ -112,7 +112,7 @@ void  render_space(space_t const* space) {
 
 	// Print positions for all ships
 	const float row_h = 40;
-	float offset_x = 32, offset_y = 480 - space->num_ships * row_h;
+	float offset_x = 64, offset_y = 480 - space->num_ships * row_h;
 	for ( ship_t const *ship = &space->ships[0];
 		ship < &space->ships[space->num_ships]; ship++ ) {
 		char buffer[1024];
